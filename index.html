@@ -2,200 +2,190 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Agregar y mostrar pendientes con acciones</title>
+  <title>SheetDB Pendientes - Estético</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
-      background: #f1f4fb;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      margin: 0; padding: 0;
-      display: flex; flex-direction: column; align-items: center;
       min-height: 100vh;
+      margin: 0; padding: 0;
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg,#3477eb 0,#eef3fe 100%);
+      display: flex; align-items: center; justify-content: center;
     }
     .container {
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 6px 24px rgba(52,119,235,0.09);
-      margin-top: 2.5em; padding: 2em 2em 1em 2em;
-      width: 100%; max-width: 430px;
-      display: flex; flex-direction: column; align-items: center;
+      background: rgba(255,255,255,0.88);
+      margin: auto;
+      border-radius: 20px;
+      box-shadow: 0 16px 32px 0 #03368520, 0 2px 8px #5a6aea24;
+      padding: 2rem 2rem 1.3rem 2rem; max-width: 410px; width:100%;
+      animation: glassIn .7s;
+    }
+    @keyframes glassIn {
+      from { opacity:0; transform:scale(.9);}
+      to   { opacity:1; transform:scale(1);}
     }
     h1 {
-      color: #3477eb;
-      font-weight: 600;
-      margin-bottom: 1em;
-      font-size: 1.6em;
+      text-align:center;
+      color: #256ed6; margin-bottom: .2em;
+      letter-spacing:.7px; font-size:2em; font-weight:800;
+      text-shadow: 0 2px 14px #3477eb21;
     }
     h2 {
-      color: #255db3; margin-top: 2.2em; font-size: 1.16em; text-align:center;
+      color: #093f85; margin: 2.3em 0 0.7em 0;
+      font-size: 1.15em; font-weight:700; text-align:center;
     }
     .icon-user {
-      font-size: 2.8em;
+      font-size: 2.9em;
       color: #3477eb;
-      margin-bottom: .2em;
+      display:block; width:100%; text-align:center;
+      margin-bottom: .14em;
+      opacity: .96;
+      text-shadow: 0 2px 14px #3477eb34;
+      animation: userIn .77s;
+    }
+    @keyframes userIn {
+      from{opacity:0;transform:scale(.8);}
+      to  {opacity:1;transform:scale(1);}
     }
     label {
-      font-weight: 600; margin-top: 5px;
-      display: flex; align-items: center;
-      font-size: 1em;
+      font-weight: 600; display: flex; align-items: center; margin-top:8px;
+      font-size: 1.09em; color:#2252bc;
     }
     input[type="text"] {
-      width: 100%; max-width: 220px;
-      padding: 0.6em 1em;
-      margin: 0.3em 0 1.3em 0;
-      border-radius: 9px;
-      border: 1px solid #3477eb30;
-      background: #eef3fe;
-      font-size: 1em;
-      outline: none;
-      transition: border 0.2s;
+      width: 90%; padding:13px 14px; margin:0.3em 0 1.17em 0;
+      border-radius: 14px; border: 1.6px solid #b2cef5;
+      background:#e6ecfa; font-size:1.03em; outline:none; box-shadow: none;
+      transition: border 0.22s, background 0.2s;
     }
-    input[type="text"]:focus { border: 1.5px solid #3477eb; background: #e5ecfa;}
+    input[type="text"]:focus {
+      border:2px solid #256ed6; background:#f2f8ff;
+    }
     button {
-      background: #3477eb;
-      color: #fff;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      padding: 0.7em 2em;
-      margin-top: 0;
-      cursor: pointer;
+      background: linear-gradient(90deg, #256ed6 55%, #6fa7f8 145%);
+      color: #fff; font-weight:bold; font-size: 1.1em;
+      border: none; border-radius:11px; padding: 12px 0;
+      width:100%; cursor:pointer; margin-top:0;
       box-shadow: 0 2px 10px #3477eb33;
-      font-size: 1.08em;
-      transition: background 0.2s, transform 0.18s;
-      display: flex; align-items: center; gap: 6px;
+      transition: background .17s, transform .13s, box-shadow .17s;
+      display:flex; align-items:center; justify-content:center; gap:6px;
+      letter-spacing:.8px;
     }
     button:hover {
-      background: #255db3;
-      transform: scale(1.04);
+      background: linear-gradient(90deg, #143b8d 0, #4b83db 100%);
+      transform: scale(1.03); box-shadow: 0 4px 23px #256ed633;
     }
-    #feedback { min-height: 2em; font-weight: 500; margin-top: 1em; text-align: center; font-size: 1.13em; transition: color 0.3s;}
+    #feedback { min-height: 2em; font-weight: 500; margin-top: 1.1em; text-align:center; font-size:1.17em; transition: color 0.33s;}
     .success { color: #21ab61; }
     .error { color: #e04747; }
     .table-wrapper {
-      background: #f8fbff;
-      border-radius: 13px;
-      box-shadow: 0 1.5px 8px #3477eb13;
-      margin-top: 1.2em;
-      padding: 1em 0.8em;
-      width:100%;
-      max-width: 410px;
+      background: #f9fafb;
+      border-radius: 14px; margin-top: 1em; padding: 0.7em .7em;
+      box-shadow: 0 3px 12px #3477eb18;
+      width: 99%; max-width:384px; margin-left:auto; margin-right:auto;
       overflow-x: auto;
     }
     table {
       border-collapse: collapse;
       width: 100%;
-      background: #eef3fe;
+      background: #f7fafd;
       font-size: 1em;
+      border-radius: 8px; overflow: hidden;
     }
     th, td {
-      border: 1px solid #3477eb48;
-      padding: 0.54em 1em;
-      text-align: left;
-      min-width:80px;
+      border: 1px solid #a9c7ee43;
+      padding: 0.5em 0.9em; text-align: left; min-width:87px;
+      font-size:1.03em; position:relative;
     }
     th {
-      background: #3477eb;
-      color: #fff; font-weight: 550;
-      letter-spacing: .5px;
-      font-size: 1.02em;
+      background: linear-gradient(90deg,#256ed6 60%, #4986db 100%);
+      color: #fff; font-weight: 590; letter-spacing: .5px;
+      font-size: 1.07em; border:none;
     }
-    tr:nth-child(even) td {
-      background: #dde8fa;
+    tr:nth-child(even) td { background:#e6ecfa;}
+    .badge {
+      display: inline-block; padding:.18em .85em .16em .85em; border-radius:8px;
+      font-size:0.96em; font-weight:600; color:#fff; background:#e47b05;
+      letter-spacing:.6px; margin-right:3px;
+      box-shadow: 0 2px 5px #e47b0530;
+      position:relative; top:-1.5px;
     }
-    .actions {
-      display: flex; gap: 14px; justify-content: center;
-    }
+    .actions { display: flex; gap: 13px; justify-content: center;}
     .icon-action {
-      cursor: pointer; padding: 5px; border-radius: 7px;
-      border: none; font-size: 1.15em; background: transparent;
+      cursor: pointer; padding: 5px; border-radius:7px; border:none;
+      font-size:1.15em; background:transparent;
       transition: background .15s, color .15s, transform .15s;
-      color: #3487b8; outline: none;
+      color: #256ed6; outline:none; position:relative;
+      box-shadow:none;
     }
-    .icon-action:hover, .icon-action:focus {
-      background: #e1f2ff;
-      color: #257a57;
-      transform: scale(1.19);
-    }
-    .icon-action.delete:hover, .icon-action.delete:focus {
-      background: #ffe7ea;
-      color: #d53a0b;
-    }
-    .icon-action:active { transform: scale(0.97);}
+    .icon-action.complete:hover { background:#e2f6e7; color:#21ab61; transform:scale(1.16);}
+    .icon-action.delete:hover { background:#ffebe7; color:#db2323; transform:scale(1.15);}
+    .icon-action:active {transform:scale(.93);}
     .icon-action[disabled] { color: #bbb; pointer-events:none;}
     .icon-action .fa { pointer-events:none;}
     .tooltip {
-      visibility: hidden; opacity: 0;
-      background: #232323ea; color: #fff;
-      border-radius: 6px;
-      padding: 2px 8px;
-      font-size: 0.92em;
-      position: absolute; z-index: 90;
-      left: 50%; transform: translateX(-50%);
-      bottom: 120%; white-space: nowrap;
-      transition: opacity .17s;
+      visibility:hidden; opacity: 0;
+      background: #232323ea; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 0.92em;
+      position: absolute; z-index: 90; left: 50%; transform: translateX(-50%);
+      bottom: 120%; white-space: nowrap; transition: opacity .17s;
     }
     .icon-action:hover .tooltip,
-    .icon-action:focus .tooltip {
-      visibility: visible; opacity: 1;
+    .icon-action:focus .tooltip { visibility: visible; opacity: 1; }
+    em { color: #474747;}
+    @media (max-width:900px) {
+      .container { max-width: 94vw; padding: 2rem 1.2rem 1.05rem 1.2rem; }
+      .table-wrapper { max-width: 98vw; }
     }
-    @media (max-width: 600px) {
-      .container,.table-wrapper { max-width: calc(100vw - 20px);}
-      table { font-size: 0.97em;}
+    @media (max-width:600px) {
+      .container { max-width: 99vw; padding: 1.3rem 0.4rem .7rem .4rem; }
+      .table-wrapper { max-width: 99vw; padding:.7em .18em;}
+      table {font-size: .98em;}
+      input[type="text"] {font-size: .97em;}
+      h1 {font-size:1.32em;}
+      th, td {padding: .44em .45em; min-width:65px;}
     }
+    @media (max-width:400px) {
+      h1 {font-size:1.02em;}
+      .container {padding: .8rem .1rem .5rem .1rem;}
+      .table-wrapper {padding: .4em 0;}
+      th, td {min-width:50px;}
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
   </style>
-  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <div class="container">
     <span class="icon-user"><i class="fa-solid fa-user"></i></span>
-    <h1>Agregar nombre y mostrar pendientes</h1>
+    <h1>Gestión de pendientes</h1>
     <form id="addRowForm" autocomplete="off">
-      <label for="nombre"><i class="fa-regular fa-address-card" style="margin-right:5px;"></i>Nombre:</label>
-      <input type="text" required id="nombre" name="nombre" maxlength="60" autocomplete="off" placeholder="Ingrese el nombre..." />
+      <label for="nombre"><i class="fa-regular fa-address-card" style="margin-right:7px;"></i>Nombre:</label>
+      <input type="text" required id="nombre" name="nombre" maxlength="60" autocomplete="off" placeholder="Ingresa nombre..."/>
       <button type="submit"><i class="fa-solid fa-plus"></i> Agregar</button>
     </form>
     <div id="feedback"></div>
-    <h2>Lista de pendientes <br>(Completado = FALSE)</h2>
-    <div class="table-wrapper">
-      <div id="spreadsheet"></div>
-    </div>
+    <h2>Lista de pendientes</h2>
+    <div class="table-wrapper"><div id="spreadsheet"></div></div>
     <div id="error" class="error"></div>
   </div>
-
   <script>
-    // Tu endpoint real de SheetDB:
     const endpoint = "https://sheetdb.io/api/v1/q52hcwnsqokuu";
-
     document.getElementById("addRowForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const nombre = document.getElementById("nombre").value.trim();
-
       if(!nombre) {
         document.getElementById("feedback").textContent = "El campo nombre no puede estar vacío.";
         document.getElementById("feedback").className = "error";
         return;
       }
-
-      const datos = {
-        data: [
-          { "Nombre": nombre, "Completado": "FALSE" }
-        ]
-      };
-
+      const datos = {data: [{ "Nombre": nombre, "Completado": "FALSE" }]};
       const btn = document.querySelector("button");
-      btn.disabled = true;
-      btn.style.opacity = 0.6;
-
+      btn.disabled = true; btn.style.opacity = .7;
       fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method:"POST", headers:{"Content-Type":"application/json"},
         body: JSON.stringify(datos)
       })
       .then(res => {
-        btn.disabled = false;
-        btn.style.opacity = 1;
+        btn.disabled = false; btn.style.opacity = 1;
         if (!res.ok) throw new Error("No se pudo agregar el dato");
         return res.json();
       })
@@ -206,41 +196,36 @@
         setTimeout(() => { cargarDatos(); }, 700);
       })
       .catch(err => {
-        btn.disabled = false;
-        btn.style.opacity = 1;
-        document.getElementById("feedback").textContent =
-          "Error al agregar dato: " + err.message;
+        btn.disabled = false; btn.style.opacity = 1;
+        document.getElementById("feedback").textContent = "Error al agregar dato: " + err.message;
         document.getElementById("feedback").className = "error";
       });
     });
 
     function cargarDatos() {
       fetch(endpoint)
-        .then(res => {
-          if (!res.ok) throw new Error("No se pudo cargar la hoja");
-          return res.json();
-        })
+        .then(res => { if (!res.ok) throw new Error("No se pudo cargar la hoja"); return res.json(); })
         .then(data => {
           let filtered = data
             .filter(row => row["Completado"] && row["Completado"].toString().toUpperCase() === "FALSE")
             .reverse();
-
           let html = '';
           if (filtered.length > 0) {
             html += `<table>
               <tr>
                 <th>Nombre</th>
+                <th>Estado</th>
                 <th>Acciones</th>
               </tr>`;
             filtered.forEach((row, idx) => {
-              // Calcula un id único basado en la posición; si tienes SheetDB con columna "id", úsala
-              const rowIndex = data.indexOf(row) + 2;  // +2 asumiendo encabezado, ajusta según tu hoja
+              const rowIndex = data.indexOf(row) + 2;
               html += `<tr>
                 <td>${row["Nombre"] || "-"}</td>
+                <td><span class="badge"><i class="fa-solid fa-hourglass-half"></i> Pendiente</span></td>
                 <td>
                   <div class="actions">
                     <button class="icon-action complete" title="Marcar como completado" onclick="marcarCompletado(${rowIndex})">
-                      <span class="tooltip">Marcar como completado</span>
+                      <span class="tooltip">Completar</span>
                       <i class="fa-solid fa-circle-check"></i>
                     </button>
                     <button class="icon-action delete" title="Eliminar registro" onclick="eliminarRegistro(${rowIndex})">
@@ -259,14 +244,10 @@
           document.getElementById("error").textContent = "";
         })
         .catch(err => {
-          document.getElementById("error").textContent =
-            "Error cargando datos: " + err.message;
+          document.getElementById("error").textContent = "Error cargando datos: " + err.message;
         });
     }
-
-    // Acción: marcar como completado
     window.marcarCompletado = function(rowIndex) {
-      // Actualización vía SheetDB PATCH, por posición en la hoja
       fetch(`${endpoint}/row/${rowIndex}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -276,16 +257,11 @@
         if (!res.ok) throw new Error("No se pudo marcar como completado");
         return res.json();
       })
-      .then(response => {
-        cargarDatos();
-      })
+      .then(response => { cargarDatos(); })
       .catch(err => {
-        document.getElementById("error").textContent =
-          "Error al actualizar: " + err.message;
+        document.getElementById("error").textContent = "Error al actualizar: " + err.message;
       });
     };
-
-    // Acción: eliminar registro
     window.eliminarRegistro = function(rowIndex) {
       if(!confirm("¿Seguro que deseas eliminar este registro?")) return;
       fetch(`${endpoint}/row/${rowIndex}`, {
@@ -295,15 +271,11 @@
         if (!res.ok) throw new Error("No se pudo eliminar el registro");
         return res.json();
       })
-      .then(response => {
-        cargarDatos();
-      })
+      .then(response => { cargarDatos(); })
       .catch(err => {
-        document.getElementById("error").textContent =
-          "Error al eliminar: " + err.message;
+        document.getElementById("error").textContent = "Error al eliminar: " + err.message;
       });
     };
-
     cargarDatos();
   </script>
 </body>
